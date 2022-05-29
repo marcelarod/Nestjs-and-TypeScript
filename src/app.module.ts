@@ -12,8 +12,9 @@ import { CoursesModule } from './courses/courses.module';
     username: "postgres",
     password: "docker",
     database: "postgres",
-    autoLoadEntities: true,
-    synchronize: true
+    autoLoadEntities: false,
+    entities:[ __dirname + "/**/*.entity.js"],
+    synchronize: false
   })
  ],
   controllers: [AppController],

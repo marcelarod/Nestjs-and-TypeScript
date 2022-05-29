@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Tags } from 'src/tags/typeORM/entities/tags.entity';
+import { Tags } from '../../tags/typeORM/entities/tags.entity';
 import { Repository } from 'typeorm';
 import { CreateCousesDto } from '../typeORM/dto/create-couses.dto';
 import { UpdateCousesDto } from '../typeORM/dto/update-couses.dto';
@@ -22,7 +22,7 @@ export class CoursesService {
          })
      }
 
-     findOne(id: number){
+     findOne(id: string){
         let IdCourse = this.courseeRepository.findOne({ where: { id:id }, relations: ['tags'] });
         if(!IdCourse){
             throw new NotFoundException(`Course Id ${id} not found`,)
@@ -44,7 +44,7 @@ export class CoursesService {
         return courses
     }
 
-    async update(id: number, updateCourseDto: UpdateCousesDto){
+    async update(id: string, updateCourseDto: UpdateCousesDto){
 
         const tags = updateCourseDto.tags && (
             await Promise.all(
@@ -53,7 +53,7 @@ export class CoursesService {
         )
       
         const updatecCourses = await this.courseeRepository.preload({
-            id: +id,
+            id: id,
             ...updateCourseDto,
             tags           
         })
@@ -64,7 +64,7 @@ export class CoursesService {
        return this.courseeRepository.save(updatecCourses)
 
    }
-   async remove(id: number){
+   async remove(id: string){
         const removeCourses = await this.courseeRepository.findOne({id: id})
 
         if(!removeCourses){

@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:13
+    container_name: postgres
+    environment:
+      POSTGRES_PASSWORD: 'docker'
+      POSTGRES_DB: postgres
+    ports:
+      - '5432:5432'
+
+  dbtest:
+    image: postgres:13
+    container_name: postgresTest
+    environment:
+      POSTGRES_PASSWORD: 'docker'
+      POSTGRES_DB: postgresTest
+    ports:
+      - '5433:5432'
